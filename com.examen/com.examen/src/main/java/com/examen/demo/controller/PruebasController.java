@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.examen.demo.service.ProductoService;
+import com.examen.demo.service.ReservasService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.examen.demo.service.HotelesService;
@@ -21,7 +21,7 @@ import com.examen.demo.service.HotelesService;
 public class PruebasController {
 
     @Autowired
-    private ProductoService reservasService;
+    private ReservasService reservasService;
     @Autowired
     private HotelesService hotelesService;
 

@@ -4,7 +4,7 @@
  */
 package com.examen.demo.service.impl;
 
-import com.examen.demo.dao.UsuarioDao;
+import com.examen.demo.dao.UsuariosDao;
 import com.examen.demo.domain.Usuarios;
 import com.examen.demo.domain.Roles;
 import jakarta.servlet.http.HttpSession;
@@ -20,7 +20,7 @@ import com.examen.demo.service.UsuariosDetailsService;
 @Service("userDetailsService")
 public class UsuariosDetailsServiceImpl implements UsuariosDetailsService, UserDetailsService {
     @Autowired
-    private UsuarioDao usuarioDao;
+    private UsuariosDao usuarioDao;
     @Autowired
     private HttpSession session;
     

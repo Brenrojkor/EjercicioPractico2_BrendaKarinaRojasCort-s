@@ -21,7 +21,9 @@ public interface ReservasService {
     //Se elimina el registro que tiene el idItem pasado por parámetro
     public void delete(Reservas reservas);
 
-    //Si el objeto item tiene un idItem que existe en la tabla item
+     
+    //Se elimina el registro que tiene el idItem pasado por parámetro
+
     //El registro de actualiza con la nueva información
     //Si el idItem NO existe en la tabla, se crea el registrocon esa información
     public void save(Reservas reservas);

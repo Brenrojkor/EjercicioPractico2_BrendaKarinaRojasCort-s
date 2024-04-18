@@ -24,7 +24,7 @@ public class RegistroServiceImpl implements RegistroService {
     @Autowired
     private CorreoService correoService;
     @Autowired
-    private UsuariosService usuarioService;
+    private UsuariosService usuariosService;
     @Autowired
     private MessageSource messageSource;  //creado en semana 4...
     @Autowired
@@ -33,7 +33,7 @@ public class RegistroServiceImpl implements RegistroService {
     @Override
     public Model activar(Model model, String username, String clave) {
         Usuarios usuario
-                = usuarioService.getUsuarioPorUsernameYPassword(username,
+                = usuariosService.getUsuarioPorUsernameYPassword(username,
                         clave);
         if (usuario != null) {
             model.addAttribute("usuario", usuario);
@@ -58,35 +58,31 @@ public class RegistroServiceImpl implements RegistroService {
         usuario.setPassword(codigo.encode(usuarios.getPassword()));
 
         if (!imagenFile.isEmpty()) {
-            usuarioService.save(usuario, false);
-            usuario.setRutaImagen(
-                    firebaseStorageService.cargaImagen(
-                            imagenFile,
-                            "usuarios",
-                            usuario.getIdUsuario()));
-        }
-        usuarioService.save(usuario, true);
+            usuariosService.save(usuario, false);
+            
     }
 
+       
+    }
+    
     @Override
     public Model crearUsuario(Model model, Usuarios usuario)
             throws MessagingException {
         String mensaje;
-        if (!usuarioService.
-                existeUsuarioPorUsernameOCorreo(
-                        usuario.getUsername(),
-                        usuario.getCorreo())) {
+        if (!usuariosService.
+                existeUsuarioPorUsername(
+                        usuario.getUsername())) {
             String clave = demeClave();
             usuario.setPassword(clave);
             usuario.setActivo(false);
-            usuarioService.save(usuario, true);
+            usuariosService.save(usuario, true);
             enviaCorreoActivar(usuario, clave);
             mensaje = String.format(
                     messageSource.getMessage(
                             "registro.mensaje.activacion.ok",
                             null,
                             Locale.getDefault()),
-                    usuario.getCorreo());
+                    usuario.);
         } else {
             mensaje = String.format(
                     messageSource.getMessage(
@@ -111,14 +107,14 @@ public class RegistroServiceImpl implements RegistroService {
     public Model recordarUsuario(Model model, Usuarios usuario)
             throws MessagingException {
         String mensaje;
-        Usuarios usuario2 = usuarioService.getUsuarioPorUsernameOCorreo(
+        Usuarios usuario2 = usuariosService.getUsuarioPorUsernameOCorreo(
                 usuario.getUsername(),
                 usuario.getCorreo());
         if (usuario2 != null) {
             String clave = demeClave();
             usuario2.setPassword(clave);
             usuario2.setActivo(false);
-            usuarioService.save(usuario2, false);
+            usuariosService.save(usuario2, false);
             enviaCorreoRecordar(usuario2, clave);
             mensaje = String.format(
                     messageSource.getMessage(
@@ -155,40 +151,6 @@ public class RegistroServiceImpl implements RegistroService {
         return clave;
     }
 
-    //Ojo cómo le lee una informacion del application.properties
-    @Value("${servidor.http}")
-    private String servidor;
-
-    private void enviaCorreoActivar(Usuarios usuario, String clave) throws MessagingException {
-        String mensaje = messageSource.getMessage(
-                "registro.correo.activar",
-                null, Locale.getDefault());
-        mensaje = String.format(
-                mensaje, usuario.getNombre(),
-                usuario.getApellidos(), servidor,
-                usuario.getUsername(), clave);
-        String asunto = messageSource.getMessage(
-                "registro.mensaje.activacion",
-                null, Locale.getDefault());
-        correoService.enviarCorreoHtml(usuario.getCorreo(), asunto, mensaje);
-    }
-
-    private void enviaCorreoRecordar(Usuarios usuario, String clave) throws MessagingException {
-        String mensaje = messageSource.getMessage(""
-                + "registro.correo.recordar",
-                null,
-                Locale.getDefault());
-        mensaje = String.format(
-                mensaje, usuario.getNombre(),
-                usuario.getApellidos(), servidor,
-                usuario.getUsername(), clave);
-        String asunto = messageSource.getMessage(
-                "registro.mensaje.recordar",
-                null, Locale.getDefault());
-        correoService.enviarCorreoHtml(
-                usuario.getCorreo(),
-                asunto, mensaje);
-    }
 }
 
     
