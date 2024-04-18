@@ -6,7 +6,6 @@ package com.examen.demo.controller;
 
 import com.examen.demo.domain.Usuarios;
 import com.examen.demo.service.UsuariosService;
-import com.examen.demo.service.FirebaseStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,20 +35,16 @@ public class UsuariosController {
         return "/usuario/modifica";
     }
 
-    @Autowired
-    private FirebaseStorageService firebaseStorageService;
+    
 
     @PostMapping("/guardar")
     public String usuarioGuardar(Usuarios usuario,
             @RequestParam("imagenFile") MultipartFile imagenFile) {
         if (!imagenFile.isEmpty()) {
-            usuarioService.save(usuario,false);
-            usuario.setRutaImagen(
-                    firebaseStorageService.cargaImagen(
-                            imagenFile,
-                            "usuario",
-                            usuario.getIdUsuario()));
-        }
+            usuarioService.save(usuario,false);        
+                    }            
+       
+    
         usuarioService.save(usuario,true);
         return "redirect:/usuario/listado";
     }

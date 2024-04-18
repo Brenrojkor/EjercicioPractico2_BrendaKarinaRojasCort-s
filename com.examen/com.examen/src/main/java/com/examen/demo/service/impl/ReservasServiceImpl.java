@@ -4,24 +4,24 @@
  */
 package com.examen.demo.service.impl;
 
-import com.examen.demo.domain.Usuarios;
+import com.examen.demo.dao.ReservasDao;
+import com.examen.demo.domain.Reservas;
 import com.examen.demo.service.ReservasService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.examen.demo.dao.ReservasDao;
 
 @Service
 public class ReservasServiceImpl implements ReservasService {
 
-    @Autowired
-    private Usuarios UsuariosDao;
+     @Autowired
+    private ReservasDao reservasDao;
 
     @Override
     @Transactional(readOnly = true)
-    public List<ReservasDao> getReservas(boolean activos) {
-        var lista = UsuariosDao.findAll();
+    public List<Reservas> getReservas(boolean activos) {
+        var lista = reservasDao.findAll();
         if (activos) {
             lista.removeIf(e -> !e.isActivo());
         }
@@ -30,39 +30,8 @@ public class ReservasServiceImpl implements ReservasService {
 
     @Override
     @Transactional(readOnly = true)
-    public Usuarios getUsuario(Usuarios usuario) {
-        return UsuariosDao.findById(Usuarios).orElse(null);
-    }
-
-    @Override
-    @Transactional
-    public void save(Usuarios usuario) {
-        UsuariosDao.save(usuario);
-    }
-
-    @Override
-    @Transactional
-    public void delete(Producto producto) {
-        productoDao.delete(producto);
-    }
-
-    // Lista de productos con precio entre ordendados por descripción ConsultaAmpliada
-    @Override
-    @Transactional(readOnly = true)
-    public List<Producto> findByPrecioBetweenOrderByDescripcion(double precioInf, double precioSup) {
-        return productoDao.findByPrecioBetweenOrderByDescripcion(precioInf, precioSup);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Producto> metodoJPQL(double precioInf, double precioSup) {
-        return productoDao.metodoJPQL(precioInf, precioSup);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Producto> metodoNativo(double precioInf, double precioSup) {
-        return productoDao.metodoNativo(precioInf, precioSup);
-    }
+    public Reservas getReserva(Reservas reservas) {
+        return reservasDao.findById(reservas.getIdReserva()).orElse(null);
+    }  
 
 }

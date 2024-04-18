@@ -6,6 +6,8 @@ package com.examen.demo.domain;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -14,23 +16,24 @@ import lombok.Data;
 public class Reservas implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hotel_id")
-    private Long numero_cedula;
-    private Long cliente_nombre;
-    private int num_clientes;
-    private double fecha_ingreso;
-    private int fecha_salida;
+    @Column(name = "id")
+    private Long idReserva;
+    private String cliente_nombre;
+    private int cnum_huespedes;
+    private int hotel_id;
+    private Date fecha_ingreso;
+    private Date fecha_salida;
+    private String numero_cedula;
+    private boolean activo;
+
+    @OneToMany
+    @JoinColumn(name = "id", updatable = false)
+    List<Hoteles> Hoteles;
 
     public Reservas() {
     }
 
-    public Reservas(Long numero_cedula, Long cliente_nombre, double fecha_ingreso, int num_clientes) {
-        this.numero_cedula = numero_cedula;
-        this.cliente_nombre = cliente_nombre;
-        this.fecha_ingreso = fecha_ingreso;
-        this.num_clientes = num_clientes;
-    }
 }
-

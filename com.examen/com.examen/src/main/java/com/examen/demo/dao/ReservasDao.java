@@ -4,9 +4,9 @@
  */
 package com.examen.demo.dao;
 
-import com.examen.demo.domain.Empleados;
+import com.examen.demo.domain.Reservas;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReservasDao extends JpaRepository <Empleados,Long> {
-     
+public interface ReservasDao extends JpaRepository <Reservas,Long> {
+    
 }

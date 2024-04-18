@@ -4,19 +4,15 @@
  */
 package com.examen.demo.service;
 
-import com.examen.demo.domain.Usuarios;
-import jakarta.mail.MessagingException;
-import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
+import com.examen.demo.domain.Reservas;
+import java.util.List;
 
 public interface ReservasService {
-
-    public Model activar(Model model, String usuario, String clave);
-
-    public Model crearUsuario(Model model, Usuarios usuario) throws MessagingException;
     
-    public void activar(Usuarios usuario, MultipartFile imagenFile);
+    public List<Reservas> getReservas(boolean activo);
+
+    // Se obtiene un Categoria, a partir del id de un categoria
+    public Reservas getReserva(Reservas reservas);
     
-    public Model recordarUsuario(Model model, Usuarios usuario) throws MessagingException;
 }
 
