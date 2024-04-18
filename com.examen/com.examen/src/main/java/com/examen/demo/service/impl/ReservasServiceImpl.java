@@ -6,14 +6,14 @@ package com.examen.demo.service.impl;
 
 import com.examen.demo.dao.Reservas;
 import com.examen.demo.domain.Usuarios;
-import com.examen.demo.service.ProductoService;
+import com.examen.demo.service.UsuariosService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class ReservasServiceImpl implements ProductoService {
+public class ReservasServiceImpl implements UsuariosService {
 
     @Autowired
     private Usuarios UsuariosDao;
@@ -31,13 +31,13 @@ public class ReservasServiceImpl implements ProductoService {
     @Override
     @Transactional(readOnly = true)
     public Usuarios getUsuario(Usuarios usuario) {
-        return UsuariosDao.findById(Usuario).orElse(null);
+        return UsuariosDao.findById(Usuarios).orElse(null);
     }
 
     @Override
     @Transactional
-    public void save(Producto producto) {
-        productoDao.save(producto);
+    public void save(Usuarios usuario) {
+        UsuariosDao.save(usuario);
     }
 
     @Override

@@ -6,6 +6,7 @@ package com.examen.demo.controller;
 
 
 import com.examen.demo.domain.Hoteles;
+import com.examen.demo.service.HotelesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,52 +15,74 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.examen.demo.service.ReservasService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.examen.demo.service.HotelesService;
 
 @Controller
 @RequestMapping("/pruebas")
+
 public class PruebasController {
 
     @Autowired
     private ReservasService reservasService;
     @Autowired
-    private HotelesService hotelesService;
+    private HotelesService categoriaService;
 
     @GetMapping("/listado")
     public String listado(Model model) {
-        var reserva = reservasService.getReservas(false);
-        var hotel = hotelesService.getHoteles(false);
-        model.addAttribute("reservas", reserva);
-        model.addAttribute("totalreservas", reserva.size());
-        model.addAttribute("hoteles", hotel);
+        var productos = reservasService.getReservas(false);
+        var categorias = categoriaService.getCategorias(false);
+        model.addAttribute("productos", productos);
+        model.addAttribute("totalProductos", productos.size());
+        model.addAttribute("categorias", categorias);
         return "/pruebas/listado";
     }
 
-    @GetMapping("/listado/{id}")
-    public String listado(Model model, Hoteles hoteles) {
-        var reserva = reservasService.getHoteles(hoteles).getReservas();
-        var hotel = hotelesService.getHoteles(false);
-        model.addAttribute("reservas", reserva);
-        model.addAttribute("totalreservas", reserva.size());
-        model.addAttribute("hoteles", hotel);
+    @GetMapping("/listado/{idCategoria}")
+    public String listado(Model model, Categoria categoria) {
+        var productos = categoriaService.getCategoria(categoria).getProductos();
+        var categorias = categoriaService.getCategorias(false);
+        model.addAttribute("productos", productos);
+        model.addAttribute("totalProductos", productos.size());
+        model.addAttribute("categorias", categorias);
         return "/pruebas/listado";
     }
 
     //Los métodos siguientes son para la prueba de consultas ampliadas
     @GetMapping("/listado2")
     public String listado2(Model model) {
-        var reserva = reservasService.getProductos(false);
-        model.addAttribute("reservas", reserva);
+        var productos = productoService.getProductos(false);
+        model.addAttribute("productos", productos);
         return "/pruebas/listado2";
     }
 
     @PostMapping("/query1")
-    public String consultaQuery1(@RequestParam(value = "precioInf") double reservaInf,
-            @RequestParam(value = "reservaSup") double reservaSup, Model model) {
-        var reserva = reservasService.findByPrecioBetweenOrderByDescripcion(reservaInf, reservaSup);
-        model.addAttribute("reservas", reserva);
-        model.addAttribute("reservaInf", reservaInf);
-        model.addAttribute("reservaSup", reservaSup);
+    public String consultaQuery1(@RequestParam(value = "precioInf") double precioInf,
+            @RequestParam(value = "precioSup") double precioSup, Model model) {
+        var productos = productoService.findByPrecioBetweenOrderByDescripcion(precioInf, precioSup);
+        model.addAttribute("productos", productos);
+        model.addAttribute("precioInf", precioInf);
+        model.addAttribute("precioSup", precioSup);
+        return "/pruebas/listado2";
+    }
+
+    @PostMapping("/query2")
+    public String consultaQuery2(@RequestParam(value = "precioInf") double precioInf,
+            @RequestParam(value = "precioSup") double precioSup, Model model) {
+        var productos = productoService.metodoJPQL(precioInf, precioSup);
+        model.addAttribute("productos", productos);
+        model.addAttribute("totalProductos", productos.size());
+        model.addAttribute("precioInf", precioInf);
+        model.addAttribute("precioSup", precioSup);
+        return "/pruebas/listado2";
+    }
+
+    @PostMapping("/query3")
+    public String consultaQuery3(@RequestParam(value = "precioInf") double precioInf,
+            @RequestParam(value = "precioSup") double precioSup, Model model) {
+        var productos = productoService.metodoJPQL(precioInf, precioSup);
+        model.addAttribute("productos", productos);
+        model.addAttribute("totalProductos", productos.size());
+        model.addAttribute("precioInf", precioInf);
+        model.addAttribute("precioSup", precioSup);
         return "/pruebas/listado2";
     }
 }

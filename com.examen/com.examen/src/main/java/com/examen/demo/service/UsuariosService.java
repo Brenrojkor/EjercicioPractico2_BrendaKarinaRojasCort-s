@@ -10,7 +10,7 @@ import java.util.List;
 public interface UsuariosService {
     
     // Se obtiene un listado de usuarios en un List
-    public List<Usuarios> getUsuarios();
+    public List<Usuarios> getUsuarios(boolean activo);
     
     // Se obtiene un Usuario, a partir del id de un usuario
     public Usuarios getUsuario(Usuarios usuario);
@@ -26,5 +26,6 @@ public interface UsuariosService {
     
     // Se elimina el usuario que tiene el id pasado por parámetro
     public void delete(Usuarios usuario);
+    
     
 }

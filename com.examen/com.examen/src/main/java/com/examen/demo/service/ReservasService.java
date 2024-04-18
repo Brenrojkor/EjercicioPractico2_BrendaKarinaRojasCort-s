@@ -4,31 +4,19 @@
  */
 package com.examen.demo.service;
 
-import com.examen.demo.domain.Reservas;
-import java.util.ArrayList;
-import java.util.List;
+import com.examen.demo.domain.Usuarios;
+import jakarta.mail.MessagingException;
+import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ReservasService {
 
-    List<Reservas> listaReservas = new ArrayList<>();
+    public Model activar(Model model, String usuario, String clave);
 
-    public List<Reservas> gets();
-
-    //Se recupera el registro que tiene el idItem pasado porparámetro
-    //si no existe en la tabla se retorna null
-    public Reservas get(Reservas reservas);
-
-    //Se elimina el registro que tiene el idItem pasado por parámetro
-    public void delete(Reservas reservas);
-
-     
-    //Se elimina el registro que tiene el idItem pasado por parámetro
-
-    //El registro de actualiza con la nueva información
-    //Si el idItem NO existe en la tabla, se crea el registrocon esa información
-    public void save(Reservas reservas);
-
-    public void actualiza(Reservas reservas);
-
-    public void facturar();
+    public Model crearUsuario(Model model, Usuarios usuario) throws MessagingException;
+    
+    public void activar(Usuarios usuario, MultipartFile imagenFile);
+    
+    public Model recordarUsuario(Model model, Usuario usuario) throws MessagingException;
 }
+
