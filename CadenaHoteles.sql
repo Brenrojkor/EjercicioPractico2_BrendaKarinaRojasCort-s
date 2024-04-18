@@ -1,6 +1,12 @@
 -- Creación de la base de datos
 CREATE DATABASE IF NOT EXISTS cadena_hotelera;
+drop user if exists usuario;
+/*Se crea un usuario para la base de datos llamado "usuario_prueba" y tiene la contraseña "Usuario_Clave."*/
+create user 'usuario'@'%' identified by 'Usuar1o';
 
+/*Se asignan los prvilegios sobr ela base de datos TechShop al usuario creado */
+grant all privileges on cadena_hotelera.* to 'usuario'@'%';
+flush privileges;
 -- Uso de la base de datos
 USE cadena_hotelera;
 
