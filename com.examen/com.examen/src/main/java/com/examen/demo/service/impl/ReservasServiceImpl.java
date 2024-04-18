@@ -4,23 +4,23 @@
  */
 package com.examen.demo.service.impl;
 
-import com.examen.demo.dao.Reservas;
 import com.examen.demo.domain.Usuarios;
-import com.examen.demo.service.UsuariosService;
+import com.examen.demo.service.ReservasService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.examen.demo.dao.ReservasDao;
 
 @Service
-public class ReservasServiceImpl implements UsuariosService {
+public class ReservasServiceImpl implements ReservasService {
 
     @Autowired
     private Usuarios UsuariosDao;
 
     @Override
     @Transactional(readOnly = true)
-    public List<Reservas> getReservas(boolean activos) {
+    public List<ReservasDao> getReservas(boolean activos) {
         var lista = UsuariosDao.findAll();
         if (activos) {
             lista.removeIf(e -> !e.isActivo());

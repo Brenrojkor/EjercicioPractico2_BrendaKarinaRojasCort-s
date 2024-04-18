@@ -17,6 +17,6 @@ public interface ReservasService {
     
     public void activar(Usuarios usuario, MultipartFile imagenFile);
     
-    public Model recordarUsuario(Model model, Usuario usuario) throws MessagingException;
+    public Model recordarUsuario(Model model, Usuarios usuario) throws MessagingException;
 }
 

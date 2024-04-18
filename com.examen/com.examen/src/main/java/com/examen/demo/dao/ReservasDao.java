@@ -7,6 +7,6 @@ package com.examen.demo.dao;
 import com.examen.demo.domain.Empleados;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface Reservas extends JpaRepository <Empleados,Long> {
+public interface ReservasDao extends JpaRepository <Empleados,Long> {
      
 }

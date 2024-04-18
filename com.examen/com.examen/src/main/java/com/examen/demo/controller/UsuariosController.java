@@ -5,7 +5,7 @@
 package com.examen.demo.controller;
 
 import com.examen.demo.domain.Usuarios;
-import com.examen.demo.service.UsuarioService;
+import com.examen.demo.service.UsuariosService;
 import com.examen.demo.service.FirebaseStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UsuariosController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private UsuariosService usuarioService;
 
     @GetMapping("/listado")
     public String listado(Model model) {
